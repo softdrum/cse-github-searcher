@@ -79,7 +79,7 @@ export default {
         commit('SET_REPOS', data);
         commit('SET_ERROR_MESSAGE', '');
       } catch (error) {
-        commit('SET_ERROR_MESSAGE', 'Unable to load users info');
+        commit('SET_ERROR_MESSAGE', 'User not found');
       }
       commit('SET_LOADING', false);
     },
