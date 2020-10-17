@@ -1,10 +1,15 @@
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const webpack = require('webpack');
-const path = require('path');
 
 module.exports = {
   entry: ["babel-polyfill", "./src/main.js"],
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].[hash].js'
+  },
   resolve: {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
@@ -25,6 +30,7 @@ module.exports = {
     hot: true,
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
