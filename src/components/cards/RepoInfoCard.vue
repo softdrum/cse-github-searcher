@@ -22,23 +22,23 @@ export default {
   props: {
     title: {
       type: String,
-      default: ''
+      default: '',
     },
     subTitle: {
       type: String,
-      default: ''
+      default: '',
     },
     description: {
       type: String,
-      default: ''
+      default: '',
     },
     language: {
       type: String,
-      default: ''
+      default: '',
     },
     url: {
       type: String,
-      default: ''
+      default: '',
     }
   }
 }
