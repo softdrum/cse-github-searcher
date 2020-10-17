@@ -4,9 +4,8 @@ import { getField, updateField } from 'vuex-map-fields';
 export default {
   state: {
     searchQuery: {
-      login: '',
-      order: 'desc',
-      page: 1
+      input: '',
+      selectValue: '',
     },
     searchResult: {
       data: [],
@@ -39,26 +38,21 @@ export default {
       state.searchResult.totalCount = totalCount;
       state.searchResult.query = { ...query };
     },
-    SET_SEARCH_QUERY(state, value) {
-      state.searchQuery = {
-        ...state.searchQuery,
-        ...value,
-      }
-    },
     SET_LOADING(state, value) {
       state.loading = value;
     },
     updateField,
   },
   actions: {
-    async fetchUsers ({ commit, state }) {
+    async fetchUsers ({ commit, state }, query) {
+      let { input, selectValue, page } = query;
+      input = input || state.searchResult.query.login;
+      selectValue = selectValue || state.searchResult.query.order || 'desc';
+      page = page || 1;
       commit('SET_LOADING', true);
       commit('RESET_MESSAGES');
       try {
-        const {login, order, page} = state.searchQuery;
-        const isValidQuery = login && order && page;
-        if (!isValidQuery) throw new Error('Wrong request!');
-        const response = await githubApiService.searchUsers(login, order, page);
+        const response = await githubApiService.searchUsers(input, selectValue, page);
         const users = response.items;
         // github api allows to fetch only up to 1000 users
         const totalCount = response.total_count > 1000 ? 1000 : response.total_count;
@@ -66,8 +60,8 @@ export default {
           users,
           totalCount,
           query: {
-            login,
-            order,
+            login: input,
+            order: selectValue,
             page,
           },
         });
@@ -79,9 +73,6 @@ export default {
         commit('SET_ERROR_MESSAGE', error.message);
       }
       commit('SET_LOADING', false);
-    },
-    setSearchQuery({ commit }, data) {
-      commit('SET_SEARCH_QUERY', data);
     }
   }
 }
