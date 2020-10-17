@@ -10,20 +10,21 @@
     >
     </b-form-input>
     <b-form-select
-      @change="search"
       v-if="sortOptions.length"
       v-model="searchQuery.selectValue"
+      :disabled="loading"
       :options="sortOptions"
       class="order-select"
       size="lg"
+      @change="search"
     >
     </b-form-select>
     <b-button
-      @click="search"
       :disabled="loading"
       variant="primary"
       class="ml-1 search-button"
       size="lg"
+      @click="search"
     >
       <b-icon
         :icon="btnIcon"
