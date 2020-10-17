@@ -1,66 +1,86 @@
 <template>
-  <div class="d-flex">
-    <search-input
-      @enter="search"
-      v-model="searchQuery.login"
+  <div class="d-flex align-items-center">
+    <b-form-input
+      v-model="searchQuery.input"
+      @keyup.enter="search"
+      type="search"
+      autofocus
+      size="lg"
+      class="mr-1 ttt"
     >
-    </search-input>
-    <search-order-select
-      v-if="isOrderSelectEnabled"
-      v-model="searchQuery.order"
-      :options="options.sortOptions"
-      @changed="search"
+    </b-form-input>
+    <b-form-select
+      @change="search"
+      v-if="sortOptions.length"
+      v-model="searchQuery.selectValue"
+      :options="sortOptions"
+      class="order-select"
+      size="lg"
     >
-    </search-order-select>
-    <search-button
+    </b-form-select>
+    <b-button
       @click="search"
-      :loading="loading"
+      :disabled="loading"
+      variant="primary"
+      class="ml-1 search-button"
+      size="lg"
     >
-    </search-button>
+      <b-icon
+        :icon="btnIcon"
+        :animation="btnAnimation"
+      >
+      </b-icon>
+    </b-button>
   </div>
 </template>
 
 <script>
-import SearchInput from '@/components/search/SearchInput';
-import SearchOrderSelect from '@/components/search/SearchOrderSelect';
-import SearchButton from '@/components/search/SearchButton';
-
-import has from 'has';
-
+import { mapState } from 'vuex';
 export default {
   name: 'SearchBar',
-  components: {
-    SearchInput,
-    SearchOrderSelect,
-    SearchButton,
-  },
   props: {
     value: {
       type: Object,
-      required: true
+      default: () => ({
+        input: '',
+        selectValue: '',
+      })
     },
-    options: {
-      type: Object,
-      default: () => ({}),
+    sortOptions: {
+      type: Array,
+      default: () => [],
     },
     loading: {
       type: Boolean,
       default: false,
     }
   },
+  created() {
+    this.searchQuery.selectValue = this.sortOptions.length ? this.sortOptions[0].value : '';
+  },
   computed: {
+    btnIcon() {
+      return this.loading ? 'arrow-clockwise' : 'search';
+    },
+    btnAnimation() {
+      return this.loading ? 'spin' : '';
+    },
     searchQuery: {
       get() { return this.value },
       set(newValue) { this.$emit('input', newValue) },
     },
-    isOrderSelectEnabled() {
-      return has(this.options, 'sortOptions');
-    }
   },
   methods: {
     search() {
-      this.$emit('search');
+      if (this.value.input) {
+        this.$emit('search', this.value);
+      }
     }
   }
 }
 </script>
+<style scoped>
+.order-select {
+  width: 100px !important;
+}
+</style>
