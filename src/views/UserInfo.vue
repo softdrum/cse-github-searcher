@@ -1,13 +1,13 @@
 <template>
   <b-container class="my-4">
-    <b-row class="mb-3">
+    <b-row class="mb-2">
       <b-col>
         <div class="d-flex align-center">
           <b-button
-            class="mr-2"
-            :disabled="loading"
             @click="$router.go(-1)"
-            pill
+            :disabled="loading"
+            class="mr-3"
+            pill  
           >
             <b-icon
               icon="arrow-left"
@@ -15,7 +15,7 @@
             </b-icon>
             <span>Back</span>
           </b-button>
-          <h3 class="mt-2">User profile</h3>
+          <h2 class="mt-2">User profile</h2>
         </div>
       </b-col>
     </b-row>
@@ -34,7 +34,7 @@
         lg="4"
         class="mb-4 mb-md-0"
       >
-       <UserCard :user="user" :loading="loading"/>
+       <user-card :user="user" :loading="loading"></user-card>
       </b-col>
       <b-col
         cols="12"
@@ -44,7 +44,7 @@
       >
         <b-row>
           <b-col>
-            <h4>Pinned repositories</h4>
+            <h3>Pinned repositories</h3>
           </b-col>
         </b-row>
         <transition name="fade">
@@ -61,7 +61,7 @@
             >
               <repo-info-card
                 :title="repo.name"
-                :sub-title="repo.id"
+                :sub-title="repo.id.toString()"
                 :description="repo.description"
                 :language="repo.language"
                 :url="repo.url"
