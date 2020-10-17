@@ -1,6 +1,6 @@
 <template>
   <base-card
-    class="d-flex flex-column justify-content-center align-items-center p-2"
+    class="d-flex flex-column justify-content-center align-items-center p-2 text-break break-word"
   >
     <b-skeleton-wrapper :loading="loading">
       <template v-slot:loading>
@@ -29,12 +29,13 @@
           </h6>
         </div>
         <b-list-group class="mb-2">
-          <UserInfoListItem
+          <user-info-list-item
             v-for="(item, i) in userInfo"
             :key="i"
             :text="item.text"
             :icon="item.icon"
-          />
+          >
+          </user-info-list-item>
         </b-list-group>
         <b-card-text v-if="user.bio" v-text="user.bio"></b-card-text>
       </section>
