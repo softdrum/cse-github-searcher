@@ -6,7 +6,7 @@
           <h2>GitHub Search</h2>
           <search-bar
             v-model="searchQuery"
-            :options="options"
+            :sort-options="sortOptions"
             :loading="loading"
             @search="fetchUsers"
           >
@@ -44,7 +44,12 @@
         lg="3"
         class="mb-4"
       >
-        <user-card-mini :data="user"></user-card-mini>
+        <user-card-mini
+          :id="user.id"
+          :login="user.login"
+          :avatarURL="user.avatarURL"
+        >
+        </user-card-mini>
       </b-col>
     </b-row>
     <b-row v-if="totalPages > 1 && !loading && !errorMessage">
@@ -88,8 +93,13 @@ export default {
   async created() {
     const isQueryValid = this.checkQuery(this.query);
     if (isQueryValid) {
-      this.setSearchQuery(this.query);
-      await this.fetchUsers();
+      const { login, order, page } = this.query;
+      this.searchQuery = {
+        input: login,
+        selectValue: order,
+        page,
+      }
+      await this.fetchUsers(this.searchQuery);
     }
   },
   beforeDestroy() {
@@ -118,34 +128,29 @@ export default {
     resultQuery() { return this.searchResult.query },
   },
   data: () => ({
-    options: {
-      sortOptions: [
-        {
-          value: 'desc',
-          text: 'Desc',
-          selected: true
-        }, 
-        {
-          value: 'asc',
-          text: 'Asc',
-        }
-      ]
-    }
+    sortOptions: [
+      {
+        value: 'desc',
+        text: 'Desc',
+      }, 
+      {
+        value: 'asc',
+        text: 'Asc',
+      }
+    ]
   }),
   methods: {
     ...mapActions([
       'fetchUsers',
-      'setSearchQuery',
       'resetMessages',
     ]),
     async onPageChange(e, page) {
       e.preventDefault();
-      this.setSearchQuery({ page });
-      await this.fetchUsers();
+      await this.fetchUsers({ page });
     },
     checkQuery(query) {
       const { login, order, page } = query;
-      return login && order && page;
+      return login && page;
     }
   }
 }
