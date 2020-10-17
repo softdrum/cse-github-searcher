@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section class="text-center">
     <div
-      class="text-danger text-center"
+      class="error-box text-danger"
       v-if="errorMessage"
     >
       <b-icon
@@ -10,9 +10,9 @@
         class="mb-3"
       >
       </b-icon>
-      <h1 >{{ errorMessage }}</h1>
+      <h1>{{ errorMessage }}</h1>
     </div>
-    <div v-else>
+    <div v-else class="info-box">
       <h5>{{ infoMessage }}</h5>
     </div>
   </section>
