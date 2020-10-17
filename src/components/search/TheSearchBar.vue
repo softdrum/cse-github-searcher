@@ -82,6 +82,6 @@ export default {
 </script>
 <style scoped>
 .order-select {
-  width: 100px !important;
+  width: auto !important;
 }
 </style>
