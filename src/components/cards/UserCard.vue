@@ -12,7 +12,7 @@
           class="user-avatar"
         />
       </picture>
-      <section class="user-info">
+      <article class="user-info">
         <div class="mb-2">
           <h2 v-text="user.name"></h2>
           <h5 v-text="user.login"></h5>
@@ -38,7 +38,7 @@
           </user-info-list-item>
         </b-list-group>
         <b-card-text v-if="user.bio" v-text="user.bio"></b-card-text>
-      </section>
+      </article>
     </b-skeleton-wrapper>
   </base-card>
 </template>
@@ -52,7 +52,7 @@ export default {
   props: {
     user: {
       type: Object,
-      required: true
+      required: true,
     },
     loading: {
       type: Boolean,
