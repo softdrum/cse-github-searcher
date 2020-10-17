@@ -1,4 +1,5 @@
 const apiURL = 'https://api.github.com';
+import { fetch } from 'whatwg-fetch';
 
 const checkForError = response => {
   if (!response.ok) throw new Error(response.statusText);
