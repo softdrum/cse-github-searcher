@@ -1,7 +1,11 @@
 import userModule from '@/store/modules/user.store.js'
 require('jest-fetch-mock').enableMocks()
 import "babel-polyfill";
-
+/**
+ * WARNING!!!
+ * jest-fetch-mock does not work with whatwg-fetch polyfill
+ * so to pass this test you need to comment out whatwg import in api.js file
+ */
 fetchMock.dontMock();
 
 const user = "test";

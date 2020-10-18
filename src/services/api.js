@@ -1,6 +1,9 @@
 const apiURL = 'https://api.github.com';
-import { fetch } from 'whatwg-fetch';
-
+// import { fetch } from 'whatwg-fetch'; // NEEDS TO BE COMMENTED WHEN JEST TESING
+/**
+ * wrap fetch into post and get functions
+ * with error checking
+ */
 const checkForError = response => {
   if (!response.ok) throw new Error(response.statusText);
   return response.json();
