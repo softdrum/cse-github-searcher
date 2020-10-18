@@ -12,12 +12,12 @@
           class="user-avatar"
         />
       </picture>
-      <article class="user-info">
+      <div class="user-info text-break word-break">
         <div class="mb-2">
           <h2 v-text="user.name"></h2>
           <h5 v-text="user.login"></h5>
         </div>
-        <div class="d-flex mb-3">
+        <div class="d-flex flex-wrap mb-3">
           <b-icon icon="people" class=" mr-1"></b-icon>
           <h6 class="mr-2">
             <strong v-text="user.followers"></strong>
@@ -38,7 +38,7 @@
           </user-info-list-item>
         </b-list-group>
         <b-card-text v-if="user.bio" v-text="user.bio"></b-card-text>
-      </article>
+      </div>
     </b-skeleton-wrapper>
   </base-card>
 </template>
@@ -103,7 +103,12 @@ export default {
 
 <style scoped>
 .user-avatar {
-  width: 80%;
+  min-width: 210px;
+  max-width: 250px;
   border-radius: 50%;
+}
+.user-info {
+  min-width: 220px;
+  max-width: 260px;
 }
 </style>
