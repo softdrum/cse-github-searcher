@@ -74,7 +74,10 @@ export default {
   methods: {
     search() {
       if (this.value.input) {
-        this.$emit('search', this.value);
+        this.$emit('search', {
+          ...this.value,
+          page: 1,
+        });
       }
     }
   }
