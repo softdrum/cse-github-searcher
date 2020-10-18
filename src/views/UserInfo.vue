@@ -84,6 +84,15 @@ import { mapActions, mapState } from 'vuex';
 
 export default {
   name: 'UserInfo',
+  props: {
+    login: {
+      type: String,
+      default: 'Profile',
+    }
+  },
+  title() {
+    return this.login;
+  },
   components: {
     RepoInfoCard,
     UserCard,

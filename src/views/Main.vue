@@ -81,6 +81,7 @@ import { mapFields } from 'vuex-map-fields';
 
 export default {
   name: 'Main',
+  title: 'Main',
   components: {
     UserCardMini,
     UserCardMiniSkeleton,
