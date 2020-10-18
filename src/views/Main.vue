@@ -52,11 +52,11 @@
         </user-card-mini>
       </b-col>
     </b-row>
-    <b-row v-if="totalPages > 1 && !loading && !errorMessage">
+    <b-row v-if="paginationProperties.isVisible">
       <b-col>
         <b-pagination
-          size="lg"
-          align="center"
+          :size="paginationProperties.size"
+          :align="paginationProperties.align"
           :value="currentPage"
           :total-rows="totalPages"
           :per-page="1"
@@ -79,6 +79,8 @@ import MessageBox from '@/components/MessageBox';
 import { mapActions, mapGetters, mapState } from 'vuex';
 import { mapFields } from 'vuex-map-fields';
 
+import { isMobile, isIE } from 'mobile-device-detect';
+
 export default {
   name: 'Main',
   title: 'Main',
@@ -92,7 +94,7 @@ export default {
     query: Object,
   },
   async created() {
-    const isQueryValid = this.checkQuery(this.query);
+      const isQueryValid = this.checkQuery(this.query);
     if (isQueryValid) {
       const { login, order, page } = this.query;
       this.searchQuery = {
@@ -110,7 +112,9 @@ export default {
     resultQuery:{
       deep: true,
       handler(query) {
-        this.$router.replace({ query: query });
+        if (!isIE) {
+          this.$router.replace({ query: query });
+        }
       }
     }
   },
@@ -127,6 +131,14 @@ export default {
     ...mapFields(['searchQuery']),
     users() { return this.searchResult.data; },
     resultQuery() { return this.searchResult.query },
+    paginationProperties() {
+      const { totalPages, loading, errorMessage } = this;
+      let properties = {};
+      properties.isVisible = totalPages > 1 && !loading && !errorMessage;
+      properties.align = isMobile ? 'fill' : 'center';
+      properties.size = isMobile ? 'md' : 'lg';
+      return properties;
+    },
   },
   data: () => ({
     sortOptions: [
