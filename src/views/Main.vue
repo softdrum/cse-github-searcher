@@ -94,7 +94,7 @@ export default {
     query: Object,
   },
   async created() {
-      const isQueryValid = this.checkQuery(this.query);
+    const isQueryValid = this.checkQuery(this.query);
     if (isQueryValid) {
       const { login, order, page } = this.query;
       this.searchQuery = {
