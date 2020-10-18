@@ -13,6 +13,7 @@ const routes = [
   {
     path: '/user/:login',
     name: 'Nodes',
+    props: true,
     component: () => import('../views/UserInfo.vue')
   }
 ]
