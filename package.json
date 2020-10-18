@@ -35,6 +35,7 @@
     "bootstrap-vue": "^2.17.3",
     "clean-webpack-plugin": "^3.0.0",
     "has": "^1.0.3",
+    "mobile-device-detect": "^0.4.3",
     "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.4.6",
     "vuejs-paginate": "^2.1.0",
