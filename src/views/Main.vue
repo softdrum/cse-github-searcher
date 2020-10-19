@@ -5,10 +5,10 @@
         <header>
           <h2>GitHub Search</h2>
           <search-bar
+            @search="fetchUsers"
             v-model="searchQuery"
             :sort-options="sortOptions"
             :loading="loading"
-            @search="fetchUsers"
           >
           </search-bar>
         </header>
@@ -21,14 +21,14 @@
     </b-row>
     <b-row v-if="loading">
        <b-col
+        v-for="n in 8"
+        :key="n"
         cols="6"
         xs="6"
         sm="6"
         md="4"
         lg="3"
         class="mb-4"
-        v-for="n in 8"
-        :key="n"
       >
         <user-card-mini-skeleton></user-card-mini-skeleton>
       </b-col>
@@ -55,15 +55,15 @@
     <b-row v-if="paginationProperties.isVisible">
       <b-col>
         <b-pagination
-          :size="paginationProperties.size"
-          :align="paginationProperties.align"
+          @page-click="onPageChange"
           :value="currentPage"
           :total-rows="totalPages"
           :per-page="1"
+          :size="paginationProperties.size"
+          :align="paginationProperties.align"
           first-number
           last-number
           pills
-          @page-click="onPageChange"
         ></b-pagination>
       </b-col>
     </b-row>
